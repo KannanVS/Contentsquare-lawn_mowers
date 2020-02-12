@@ -19,10 +19,13 @@ for (var i = 0; i < totalMowers; i++) { // Iteration to process each mower
     var startX = parseInt(startMower[0], 10);
     var startY = parseInt(startMower[1], 10);
     var direction = startMower[2];
-    if (startX < xLimit && startY < yLimit) {
+    if (startX < xLimit && startY < yLimit) { // To check if the mower is inside the lawn
         compute(xLimit, yLimit, startX, startY, direction, lines[k + 2], (error, data) => {
+            if(error) {
+                console.log(error);
+            }
             var [x, y] = data.position;
-            printOutput(x, y, direction);
+            printOutput(x, y, direction); // Print function for result fetched
         });
     }
     else {

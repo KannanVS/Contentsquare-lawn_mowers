@@ -10,17 +10,23 @@ export const compute = (
     command: string,
     cb: Callback<result>
 ) => {
-    for (let i = 0; i < command.length; i++) {
+    for (let i = 0; i < command.length; i++) { // each character is iterated for mower command
         let value = command.charAt(i);
         if (value == 'F') {
-            forward(x, y, mowerX, mowerY, direction, (error, data) => {
+            forward(x, y, mowerX, mowerY, direction, (error, data) => { // Mower forward command
+                if (error) {
+                    console.log(error);
+                }
                 mowerX = data.position[0];
                 mowerY = data.position[1];
                 direction = data.finalDirection;
             });
         }
         else {
-            rotate(direction, value, (error, data) => {
+            rotate(direction, value, (error, data) => { // Mower rotate command
+                if (error) {
+                    console.log(error);
+                }
                 direction = data;
             })
         }
@@ -31,6 +37,8 @@ export const compute = (
     }
     return cb(null, result);
 }
+
+// Function to rotate the Mower -> according to the command direction
 
 export const rotate = (
     direction: string,
@@ -78,6 +86,8 @@ export const rotate = (
     return cb(null, direction);
 }
 
+// Function to Mower -> forward movement
+
 export const forward = (
     x: number,
     y: number,
@@ -94,7 +104,7 @@ export const forward = (
             break;
         }
         case 'E': {
-            if (mowerX <= x - 1) {
+            if (mowerX < x - 1) {
                 mowerX += 1
             }
             break;
@@ -114,6 +124,8 @@ export const forward = (
     }
     return cb(null, { position: [mowerX, mowerY], finalDirection: direction })
 }
+
+// Function to print the output and write it in a file
 
 export const printOutput = (
     x: number,
