@@ -1,3 +1,4 @@
+import * as fs from 'fs';
 import { result, Callback } from './types';
 
 export const compute = (
@@ -8,10 +9,10 @@ export const compute = (
     direction: string,
     command: string,
     cb: Callback<result>
-    ) => {
-    for(let i = 0; i < command.length; i++) {
+) => {
+    for (let i = 0; i < command.length; i++) {
         let value = command.charAt(i);
-        if(value == 'F') {
+        if (value == 'F') {
             forward(x, y, mowerX, mowerY, direction, (error, data) => {
                 mowerX = data.position[0];
                 mowerY = data.position[1];
@@ -29,46 +30,46 @@ export const compute = (
         finalDirection: direction
     }
     return cb(null, result);
-}  
+}
 
 export const rotate = (
     direction: string,
     toRotate: string,
     cb: Callback<string>
 ) => {
-    switch(direction) {
+    switch (direction) {
         case 'N': {
-            if(toRotate == "R") {
+            if (toRotate == "R") {
                 direction = "E";
             }
-            else if(toRotate == "L") {
+            else if (toRotate == "L") {
                 direction = "W";
             }
             break;
         }
         case 'E': {
-            if(toRotate == "R") {
+            if (toRotate == "R") {
                 direction = "S";
             }
-            else if(toRotate == "L") {
+            else if (toRotate == "L") {
                 direction = "N";
             }
             break;
         }
         case 'S': {
-            if(toRotate == "R") {
+            if (toRotate == "R") {
                 direction = "W";
             }
-            else if(toRotate == "L") {
+            else if (toRotate == "L") {
                 direction = "E";
             }
             break;
         }
         case "W": {
-            if(toRotate == "R") {
+            if (toRotate == "R") {
                 direction = "N";
             }
-            else if(toRotate == "L") {
+            else if (toRotate == "L") {
                 direction = "S";
             }
             break;
@@ -79,37 +80,48 @@ export const rotate = (
 
 export const forward = (
     x: number,
-    y:number,
+    y: number,
     mowerX: number,
     mowerY: number,
     direction: string,
     cb: Callback<result>
 ) => {
-    switch(direction) {
+    switch (direction) {
         case 'N': {
-            if(mowerY<y-1) {
-                mowerY+=1;
+            if (mowerY < y - 1) {
+                mowerY += 1;
             }
             break;
         }
         case 'E': {
-            if(mowerX<=x-1) {
-                mowerX+=1
+            if (mowerX <= x - 1) {
+                mowerX += 1
             }
             break;
         }
         case 'W': {
-            if(mowerX>0) {
-                mowerX-=1;
+            if (mowerX > 0) {
+                mowerX -= 1;
             }
             break;
         }
         case 'S': {
-            if(mowerY>0) {
-                mowerY-=1;
+            if (mowerY > 0) {
+                mowerY -= 1;
             }
             break;
         }
     }
-    return cb(null, {position: [mowerX, mowerY], finalDirection: direction})
+    return cb(null, { position: [mowerX, mowerY], finalDirection: direction })
+}
+
+export const printOutput = (
+    x: number,
+    y: number,
+    direction: string
+) => {
+    let finalX = x.toString();
+    let finalY = y.toString();
+    console.log(finalX + ' ' + finalY + ' ' + direction);
+    fs.appendFileSync('output.txt', finalX + ' ' + finalY + ' ' + direction + '\n');
 }

@@ -1,10 +1,9 @@
 import * as fs from 'fs';
-import { compute } from './lawn_mower-services';
+import { compute, printOutput } from './lawn_mower-services';
 
 const data = fs.readFileSync('input.txt', 'UTF-8'); // Read data from the input file
 
 const lines = data.split(/\r?\n/); // split each line of data
-console.log(lines[1])
 
 const lawnSize = lines[0].split(' ').map(function (item) { // The first line is taken for the size of the lawn
     return parseInt(item, 10); // Size is converted into integer
@@ -23,11 +22,10 @@ for (var i = 0; i < totalMowers; i++) { // Iteration to process each mower
     if (startX < xLimit && startY < yLimit) {
         compute(xLimit, yLimit, startX, startY, direction, lines[k + 2], (error, data) => {
             var [x, y] = data.position;
-            // console.log(typeof (x));
-            console.log(x, y, data.finalDirection)
+            printOutput(x, y, direction);
         });
     }
     else {
-        console.log(startX, startY, direction);
+        printOutput(startX, startY, direction);
     }
 }

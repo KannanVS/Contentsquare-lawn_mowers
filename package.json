@@ -5,8 +5,8 @@
   "main": "index.ts",
   "scripts": {
     "build": "tsc *.ts",
-    "clean": "rm *.js",
-    "test": "node index.js",
+    "clean": "rm *.js && rm output.txt",
+    "test": "node deleteOutput.js && node index.js",
     "watch": "tsc -w *.ts"
   },
   "repository": {
