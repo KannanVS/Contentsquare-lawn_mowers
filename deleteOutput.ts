@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 
 try {
-    fs.unlinkSync('./output.txt')
+    fs.unlinkSync('./files/output.txt')
 } catch (err) {
     console.error();
 }

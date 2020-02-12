@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import { compute, printOutput } from './lawn_mower-services';
 
-const data = fs.readFileSync('input.txt', 'UTF-8'); // Read data from the input file
+const data = fs.readFileSync('./files/input.txt', 'UTF-8'); // Read data from the input file
 
 const lines = data.split(/\r?\n/); // split each line of data
 

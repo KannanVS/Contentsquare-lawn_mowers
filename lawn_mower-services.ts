@@ -123,5 +123,5 @@ export const printOutput = (
     let finalX = x.toString();
     let finalY = y.toString();
     console.log(finalX + ' ' + finalY + ' ' + direction);
-    fs.appendFileSync('output.txt', finalX + ' ' + finalY + ' ' + direction + '\n');
+    fs.appendFileSync('./files/output.txt', finalX + ' ' + finalY + ' ' + direction + '\n');
 }
